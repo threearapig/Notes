@@ -130,6 +130,8 @@ Plugin: `nvim-lualine/lualine.nvim`
 Plugin: `akinsho/bufferline.nvim`  
 
 需要 `nerd-font` 来显示一些字体图标  
+> 需要有 `hack nerd-font` 等 `nerd-font` 字体  
+
 还需要一个 `colorscheme`  
 
 ---
@@ -236,7 +238,7 @@ sudo pacman -S ripgrep
 
 ---
 
-为了是 telescope 进行模糊匹配的时候，可以更好的进行分拣、分类（也就是更好的进行模糊搜索）  
+为了使 telescope 进行模糊匹配的时候，可以更好的进行分拣、分类（也就是更好的进行模糊搜索）  
 需要借助外部软件来实现，这里通过 `FZF` 这个软件来提供更好的模糊搜索匹配  
 通过另一个插件 `nvim-telescope/telescope-fzf-native.nvim` 来与 `FZF` 进行通信  
 
@@ -344,39 +346,29 @@ Plugin: `hrsh7th/nvim-cmp`
 `nvim-cmp` 提供了一个自动补全引擎  
 但是这不意味着 `nvim-cmp` 就支持各种功能的补全  
 
-各种补全的功能是通过 `sources` 来提供的  
-这些 `sources` 需要单独成为一个插件供安装，并通过 `setup.sources` 来指定需要的 `sources`  
+对于不同的补全，需要不同的补全源（sources）  
+> 例如：  
+> * 函数的补全需要从 lsp 这个源中读取数据
+> * snipptes 需要从 snipptes 这个源中读取数据
+> * 关于目录，需要从 path 这个源中读取数据
 
-```lua
-require("cmp").setup {
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'path' },
-    }
-```
 
-上面的就是一个例子，指定补全的 `sources`  
-
-但是光指定还没有用，需要安装指定 `sources` 的插件  
+#### Sources
 
 ```lua
 "hrsh7th/cmp-nvim-lsp",
 "hrsh7th/cmp-buffer",
 "hrsh7th/cmp-path",
+"hrsh7th/cmp-cmdline",
+{
+    "quangnguyen30192/cmp-nvim-ultisnips",
+    dependencies = {
+        "SirVer/ultisnips",
+        "honza/vim-snippets",
+    },
+},
+"onsails/lspkind.nvim",
+"hrsh7th/cmp-calc",
 ```
 
-这也是一些 `sources` 插件的例子  
-
----
-
-对于补全的相关功能按键  
-
-```lua
-require("cmp").setup {
-    mapping = {
-    }
-}
-```
-
-通过 `mapping` 来指出  
+关于 Sources 的部分，查看官方配置即可  
